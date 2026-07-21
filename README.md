@@ -30,12 +30,15 @@ mvn install -DskipTests
 import cn.vastark.recaptcha.*;
 import java.util.*;
 
+// 可选：从上下文传入当前请求的 trace ID 实现全链路追踪
+Callable<String> logIdFactory = () -> "trace-id-from-ctx";
+
 Client client = new Client(new Config(
     "http://127.0.0.1:8090",
     "your-api-key",
     3000,
     FailureMode.STRICT_BLOCK,
-    null
+    logIdFactory
 ));
 
 Map<String, Object> extra = new HashMap<>();
